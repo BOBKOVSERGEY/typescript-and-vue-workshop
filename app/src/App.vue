@@ -1,19 +1,12 @@
-<script>
+<script setup lang="ts">
 import TheNavbar from './components/TheNavbar.vue'
 import TheFooter from './components/TheFooter.vue'
 
-export default {
-  components: {
-    TheNavbar,
-    TheFooter,
-  },
-}
 </script>
 
 <template>
-  <TheNavbar />
+  <TheNavbar tagline="1" />
   <RouterView />
   <TheFooter />
 </template>
 
-<style></style>
