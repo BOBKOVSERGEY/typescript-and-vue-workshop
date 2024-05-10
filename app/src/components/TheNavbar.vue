@@ -3,7 +3,7 @@ import {ref} from "vue";
 
 defineProps({
   tagline: {
-    type: String
+    type: [String, Number]
   }
 })
 

@@ -1,77 +1,82 @@
-<script>
+<script setup lang="ts">
+
 import NewRestaurantForm from '../components/NewRestaurantForm.vue'
 import RestaurantCard from '../components/RestaurantCard.vue'
 import SideMenu from '../components/SideMenu.vue'
+import {computed, onMounted, ref} from "vue";
+import {useRoute} from "vue-router";
+import type {Restaurant} from "@/types/types";
 
-export default {
-  components: {
-    NewRestaurantForm,
-    RestaurantCard,
-    SideMenu,
-  },
-  data: () => ({
-    filterText: '',
-    restaurantList: [
-      {
-        id: '9f995ce4-d2fc-4d00-af1d-6cb1647c6bd3',
-        name: 'Quiche From a Rose',
-        address: '283 Thisisnota St.',
-        website: 'www.quichefromarose.com',
-        status: 'Want to Try',
-      },
-      {
-        id: 'ae62a3da-791b-4f44-99a1-4be1b0ec30b8',
-        name: 'Tamago Never Dies',
-        address: '529 Letsgofora Dr.',
-        website: 'www.tamagoneverdies.com',
-        status: 'Recommended',
-      },
-      {
-        id: '9b361dae-2d44-4499-9940-97e188d41a32',
-        name: 'Penne For Your Thoughts',
-        address: '870 Thisisa St.',
-        website: 'www.penneforyourthoughts.com',
-        status: 'Do Not Recommend',
-      },
-    ],
-    showNewForm: false,
-  }),
-  computed: {
-    filteredRestaurantList() {
-      return this.restaurantList.filter((restaurant) => {
-        if (restaurant.name) {
-          return restaurant.name.toLowerCase().includes(this.filterText.toLowerCase())
-        } else {
-          return this.restaurantList
-        }
-      })
-    },
-    numberOfRestaurants() {
-      return this.filteredRestaurantList.length
-    },
-  },
-  methods: {
-    addRestaurant(payload) {
-      this.restaurantList.push(payload)
-      this.hideForm()
-    },
-    deleteRestaurant(payload) {
-      this.restaurantList = this.restaurantList.filter((restaurant) => {
-        return restaurant.id !== payload.id
-      })
-    },
-    hideForm() {
-      this.showNewForm = false
-    },
-  },
-  mounted() {
-    const route = this.$route
+const route = useRoute();
 
-    if (this.$route.query.new) {
-      showNewForm.value = true
-    }
-  },
+type DataShape = {
+  filterText: string,
+  restaurantList: Restaurant[],
+  showNewForm: boolean
 }
+
+const filterText = ref<string>('');
+const restaurantList = ref<Restaurant[]>([
+  {
+    id: '9f995ce4-d2fc-4d00-af1d-6cb1647c6bd3',
+    name: 'Quiche From a Rose',
+    address: '283 Thisisnota St.',
+    website: 'www.quichefromarose.com',
+    status: 'Want to Try',
+  },
+  {
+    id: 'ae62a3da-791b-4f44-99a1-4be1b0ec30b8',
+    name: 'Tamago Never Dies',
+    address: '529 Letsgofora Dr.',
+    website: 'www.tamagoneverdies.com',
+    status: 'Recommended',
+  },
+  {
+    id: '9b361dae-2d44-4499-9940-97e188d41a32',
+    name: 'Penne For Your Thoughts',
+    address: '870 Thisisa St.',
+    website: 'www.penneforyourthoughts.com',
+    status: 'Do Not Recommend',
+  },
+]);
+
+const showNewForm = ref<boolean>(false);
+
+const filteredRestaurantList = computed((): Restaurant[]  => {
+  return restaurantList.value.filter((restaurant: Restaurant) => {
+    if (restaurant.name) {
+      return restaurant.name.toLowerCase().includes(filterText.value.toLowerCase())
+    } else {
+      return restaurantList.value
+    }
+  })
+});
+
+const numberOfRestaurants = computed((): number => {
+  return filteredRestaurantList.value.length
+});
+
+const hideForm = () => {
+  showNewForm.value = false
+}
+
+const addRestaurant = (payload: Restaurant) => {
+  restaurantList.value.push(payload)
+  hideForm()
+}
+
+const deleteRestaurant = (payload: Restaurant) => {
+  restaurantList.value = restaurantList.value.filter((restaurant) => {
+    return restaurant.id !== payload.id
+  })
+}
+
+onMounted(() => {
+  if (route.query.new) {
+    showNewForm.value = true
+  }
+})
+
 </script>
 
 <template>
