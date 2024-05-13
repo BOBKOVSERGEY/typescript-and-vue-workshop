@@ -40,7 +40,7 @@ const deleteDish = () => {
           {{ dish.name }}
         </p>
         <p class="subtitle mb-2">
-          <span class="tag" :class="statusColor">{{ dish.status }}</span>
+          <span class="tag" :class="statusColor">{{ dish.status }}</span> <span v-if="dish.diet" class="tag" :class="statusColor">{{ dish.diet }}</span>
         </p>
         <div>
           <button @click="deleteDish" class="button is-small is-danger is-light">Delete</button>

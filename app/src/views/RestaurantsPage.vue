@@ -9,12 +9,6 @@ import type {Restaurant} from "@/types/types";
 
 const route = useRoute();
 
-type DataShape = {
-  filterText: string,
-  restaurantList: Restaurant[],
-  showNewForm: boolean
-}
-
 const filterText = ref<string>('');
 const restaurantList = ref<Restaurant[]>([
   {
