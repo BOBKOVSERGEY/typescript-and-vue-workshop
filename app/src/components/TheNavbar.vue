@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import {ref} from "vue";
 
-defineProps({
-  tagline: {
-    type: [String, Number]
-  }
-})
+const props = defineProps<{
+  tagline: string | number
+}>()
 
 const  navList = ref([
   {

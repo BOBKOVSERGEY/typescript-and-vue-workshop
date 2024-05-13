@@ -4,12 +4,9 @@ import type { PropType} from "vue";
 import type {Restaurant} from "@/types/types";
 
 
-const props = defineProps({
-  restaurant: {
-    type: Object as PropType<Restaurant>,
-    required: true,
-  },
-});
+const props = defineProps<{
+  restaurant:  Restaurant
+}>();
 
 const statusColor = computed(() => {
   switch (props.restaurant.status) {
@@ -24,7 +21,10 @@ const statusColor = computed(() => {
   }
 })
 
-const emits    = defineEmits(['delete-restaurant']);
+//const emits  = defineEmits(['delete-restaurant']);
+const emits  = defineEmits<{
+  (e: 'delete-restaurant', restaurant: Restaurant): void
+}>();
 
 const deleteRestaurant = () => {
   emits('delete-restaurant', props.restaurant)

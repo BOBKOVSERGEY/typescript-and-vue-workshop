@@ -8,7 +8,11 @@ const props = defineProps<{
   dish: Dish
 }>();
 
-const emits =  defineEmits(['delete-dish']);
+//const emits =  defineEmits(['delete-dish']);
+
+const emits = defineEmits<{
+  (e: 'delete-dish', dish: Dish): void
+}>()
 
 const statusColor = computed(() => {
   switch (props.dish.status) {

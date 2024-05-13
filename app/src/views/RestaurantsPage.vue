@@ -110,7 +110,10 @@ onMounted(() => {
         </nav>
 
         <!-- New Restaurant Form -->
-        <NewRestaurantForm v-if="showNewForm" @add-new-restaurant="addRestaurant" @cancel-new-restaurant="hideForm" />
+        <NewRestaurantForm
+            v-if="showNewForm"
+            @add-new-restaurant="addRestaurant"
+            @cancel-new-restaurant="hideForm" />
 
         <!-- Display Results -->
         <div v-else class="columns is-multiline">
