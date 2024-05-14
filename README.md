@@ -1,3 +1,7 @@
+5. Handling Events & User Input
+   - 2. Autofocus Form Elements
+
+
 # TypeScript and Vue with Frontend Masters
 
 Watch the full course on the [Frontend Masters website](https://frontendmasters.com/courses/vue-typescript).
