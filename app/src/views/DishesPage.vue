@@ -58,6 +58,10 @@ const hideForm = () => {
   showNewForm.value = false
 }
 
+const updateFilterText = (event: Event) => {
+  filterText.value = (event.target as HTMLInputElement).value
+}
+
 onMounted(() => {
   if (route.query.new) {
     showNewForm.value = true
@@ -92,7 +96,10 @@ onMounted(() => {
             <div class="level-item is-hidden-tablet-only">
               <div class="field has-addons">
                 <p class="control">
-                  <input class="input" type="text" placeholder="Dish name" v-model="filterText" />
+                  <input class="input" type="text" placeholder="Dish name"
+                         :value="filterText"
+                         @input="updateFilterText"
+                  />
                 </p>
                 <p class="control">
                   <button class="button">Search</button>

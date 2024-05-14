@@ -19,7 +19,7 @@ const newRestaurant = ref<Restaurant>({
   status: 'Want to Try',
 });
 
-const updateName = (event: InputEvent) => {
+const updateName = (event: Event) => {
   newRestaurant.value.name = (event.target as HTMLInputElement).value
 }
 
