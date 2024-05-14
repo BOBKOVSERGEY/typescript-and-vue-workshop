@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import {v4 as uuidv4} from 'uuid'
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import { restaurantStatusList} from "@/constants";
 import type {Restaurant} from "@/types/types";
-
-/*
-const emits = defineEmits([
-  'add-new-restaurant',
-  'cancel-new-restaurant'
-]);*/
 
 const emits = defineEmits<{
   (e: 'add-new-restaurant', newRestaurant: Restaurant): void,
   (e: 'cancel-new-restaurant'): void,
 }>();
+
+const elNameInput = ref<HTMLInputElement | null>();
 
 const newRestaurant = ref<Restaurant>({
   id: uuidv4(),
@@ -23,8 +19,8 @@ const newRestaurant = ref<Restaurant>({
   status: 'Want to Try',
 });
 
-const updateName = () => {
-  console.log('some')
+const updateName = (event: InputEvent) => {
+  newRestaurant.value.name = (event.target as HTMLInputElement).value
 }
 
 const addNewRestaurant = () => {
@@ -33,18 +29,22 @@ const addNewRestaurant = () => {
 const cancelNewRestaurant = () => {
   emits('cancel-new-restaurant')
 }
+
+
+onMounted(() => {
+  elNameInput.value?.focus()
+})
 </script>
 
 <template>
-  {{newRestaurant}}
   <form @submit.prevent>
     <div class="field">
       <div class="field">
-        <label for="name" class="label">Name</label>
+        <label for="name" class="label">Name: {{ newRestaurant.name }}</label>
         <div class="control">
           <input
-              v-model="newRestaurant.name"
-              @keyup.space="updateName"
+              :value="newRestaurant.name"
+              @input="updateName"
               type="text"
               class="input is-large"
               placeholder="Beignet and the Jets"
